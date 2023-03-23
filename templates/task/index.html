@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" name="title" class="form-control" placeholder="New task..."
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">+Add
+                        task
+                    </button>
+                </div>
+            </form>
+
+            <div class="btn-group col-sm-12" role="group" aria-label="Button group with nested dropdown">
+                <a href="?status=0" type="button" class="btn btn-warning">Todo</a>
+                <a href="?status=1" type="button" class="btn btn-primary">In process</a>
+                <a href="?status=2" type="button" class="btn btn-success">Done</a>
+                <a href="?status=3" type="button" class="btn btn-danger">Cancelled</a>
+
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Dropdown
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="?priority=0">Lowest</a></li>
+                        <li><a href="?priority=1">Low</a></li>
+                        <li><a href="?priority=2">Medium</a></li>
+                        <li><a href="?priority=3">High</a></li>
+                        <li><a href="?priority=4">Highest</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul class="list-group" style="margin-top: 10px">
+                {% for object in objects_list %}
+                <div>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="{% url 'task:edit' object.id %}">{{object.title}}
+                            {% if object.priority == 0 %}
+                            <span>
+                                <i class="bi bi-chevron-double-down"></i>
+                            </span>
+                            {% elif object.priority == 1 %}
+                            <span>
+                            <i class="bi bi-chevron-down"></i>
+                            </span>
+                            {% elif object.priority == 2 %}
+                            <span>
+                            <i class="bi bi-list"></i>
+                            </span>
+                            {% elif object.priority == 3 %}
+                            <span class="text-warning">
+                            <i class="bi bi-chevron-compact-up"></i>
+                            </span>
+                            {% elif object.priority == 4 %}
+                            <span class="text-danger bold">
+                            <i class="bi bi-chevron-double-up"></i>
+                            </span>
+                            {% endif %}
+                            <br>
+                            <p class="text-lowercase" style="color:black"><b>deadline : </b>{{ object.deadline }}</p>
+                        </a>
+                        <div>
+                            <a href="{% url 'task:edit' object.id %}" class="btn btn-outline-primary">Edit</a>
+                            <a href="{% url 'task:delete' object.id %}" class="btn btn-outline-danger">Delete</a>
+                        </div>
+                    </li>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

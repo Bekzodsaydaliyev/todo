@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+{% block title %}Create task{% endblock %}
+{% block content %}
+{% if created %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.content }}</p>
+{% else %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!--    <div class="row g-3 align-items-center" style="margin-top: 10px">-->
+    <!--        <div class="col-auto">-->
+    <!--            <label for="title" class="col-form-label">Title</label>-->
+    <!--        </div>-->
+    <!--        <div class="col-auto">-->
+    <!--            <input id="title" type="text" placeholder="title" name="title" class="form-control">-->
+    <!--        </div>-->
+    <!--        <div class="col-auto">-->
+    <!--    <span class="form-text">-->
+    <!--      Must be 1-222 characters long.-->
+    <!--    </span>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="row g-3 align-items-center" style="margin-top: 20px">-->
+    <!--        <label for="content" class="col-sm-2 col-form-label">Content</label><br>-->
+    <!--        <textarea name="content" id="content" cols="60" rows="10" placeholder="message"-->
+    <!--                  aria-label=".form-control-lg example"></textarea>-->
+    <!--    </div>-->
+    <!--        {{ form.as_p }}-->
+    <!--    <div>-->
+    <label for="title">Title</label>
+    <br>
+    <input type="text" id="title" placeholder="title" name="title">
+    <div style="margin-top: 20px">
+        <label for="content">Message</label><br>
+        <textarea name="content" id="content" cols="60" rows="10" placeholder="message"
+                  aria-label=".form-control-lg example"></textarea>
+    </div>
+
+    <div style="margin-top: 10px">
+        <input type="submit" class="btn btn-outline-primary" value="Add new">
+    </div>
+</form>
+{% endif %}
+{% endblock %}
